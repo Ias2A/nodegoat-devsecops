@@ -6,4 +6,4 @@ db.createCollection('allocation');
 db.createCollection('benefits');
 db.createCollection('research');
 
-console.log('MongoDB initialized for NodeGoat');
+print('MongoDB initialized for NodeGoat');
