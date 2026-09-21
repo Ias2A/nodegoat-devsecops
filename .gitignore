@@ -16,6 +16,8 @@ Icon?
 
 # Idea stuff
 .idea/**
+*.swap
+*.swo
 
 # Zap output
 report*.html
@@ -38,3 +40,9 @@ coverage
 dist
 build
 .idea
+
+#SAST results
+semgrep-results.json
+npm-audit-results.json
+gitleaks-report.json
+trivy-results.json
