@@ -68,7 +68,7 @@ jobs:
           echo "SAST gate PASSED"
 
       - name: Upload Semgrep Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: semgrep-results
@@ -111,7 +111,7 @@ jobs:
           echo "Dependency gate PASSED"
 
       - name: Upload npm Audit Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: npm-audit-results
