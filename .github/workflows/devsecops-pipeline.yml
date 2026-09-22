@@ -40,7 +40,7 @@ jobs:
           echo ""
           echo "Semgrep Reults:"
           if [ -f semgrep-results.json ]; then
-            jq '.results | length' semgrep-result.json
+            jq '.results | length' semgrep-results.json
             jq '.results[] | select(.extra.severity == "ERROR") | .message' semgrep-results.json || echo "No critical errors"
           fi
 
@@ -55,7 +55,7 @@ jobs:
           TOTAL=$(jq '.results | length' semgrep-results.json)
 
           echo ""
-          echo"==SAST GAte Results=="
+          echo "==SAST GAte Results=="
           echo "Total findings: $TOTAL"
           echo "Critical (ERROR) findings: $CRITICAL"
           echo ""
@@ -110,12 +110,12 @@ jobs:
 
           echo "Dependency gate PASSED"
 
-        - name: Upload npm Audit Results
-          uses: actions/upload-artifact@v3
-          if: always()
-          with:
-            name: npm-audit-results
-            path: npm-audit-results.json
+      - name: Upload npm Audit Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: npm-audit-results
+          path: npm-audit-results.json
 
 
         #Secrets scaning
@@ -134,9 +134,9 @@ jobs:
       - name: Build docker image
         run: |
           echo "Building docker image"
-        docker build -t nodegoat:latest .
-        docker tag nodegoat:latest nodegoat:${{ github.sha }}
-        echo "Docker image built successfully"
+          docker build -t nodegoat:latest .
+          docker tag nodegoat:latest nodegoat:${{ github.sha }}
+          echo "Docker image built successfully"
 
       - name: Run Trivy Scan & Export Results
         uses: aquasecurity/trivy-action@master
@@ -178,7 +178,7 @@ jobs:
           echo ""
 
       - name: Notify Failure
-        if failure()
+        if: failure()
         run: |
           echo ""
           echo "BUILD BLOCKED"
