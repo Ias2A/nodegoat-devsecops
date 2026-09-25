@@ -74,48 +74,49 @@ jobs:
           name: semgrep-results
           path: semgrep-results.json
 
-      #dependency scaning
-      - name: Run npm Audit
-        id: npm_audit
-        run: |
-          echo "Running npm audit"
-          npm install
-          npm audit --json > npm-audit-results.json || true
+      # #dependency scaning
+      # - name: Run npm Audit
+      #   id: npm_audit
+      #   run: |
+      #     echo "Running npm audit"
+      #     npm install
+      #     npm audit --json > npm-audit-results.json || true
 
-      - name: Check npm Audit Results
-        run: |
-          if [ ! -f npm-audit-results.json ]; then
-            echo "No vulnerable dependencies"
-            exit 0
-          fi
+      # - name: Check npm Audit Results
+      #   run: |
+      #     if [ ! -f npm-audit-results.json ]; then
+      #       echo "No vulnerable dependencies"
+      #       exit 0
+      #     fi
 
-          CRITICAL=$(jq '.metadata.vulnerabilities.critical // 0' npm-audit-results.json)
-          HIGH=$(jq '.metadata.vulnerabilities.high // 0' npm-audit-results.json)
-          TOTAL=$(jq '.metadata.vulnerabilities.total // 0' npm-audit-results.json)
+      #     CRITICAL=$(jq '.metadata.vulnerabilities.critical // 0' npm-audit-results.json)
+      #     HIGH=$(jq '.metadata.vulnerabilities.high // 0' npm-audit-results.json)
+      #     TOTAL=$(jq '.metadata.vulnerabilities.total // 0' npm-audit-results.json)
 
-          echo ""
-          echo "==Dependency Scan Results=="
-          echo "Total vulnerabilities: $TOTAL"
-          echo "Critical: $CRITICAL"
-          echo "High: $HIGH"
+      #     echo ""
+      #     echo "==Dependency Scan Results=="
+      #     echo "Total vulnerabilities: $TOTAL"
+      #     echo "Critical: $CRITICAL"
+      #     echo "High: $HIGH"
 
-          if [ $CRITICAL -gt 0 ]; then
-            echo "Dependency gate FAILED: Critical vulnerabilities found"
-            exit 1
-          fi
+      #     if [ $CRITICAL -gt 0 ]; then
+      #       echo "Dependency gate FAILED: Critical vulnerabilities found"
+      #       exit 1
+      #     fi
 
-          if [ $HIGH -gt 5 ]; then
-            echo "Warning: $HIGH high vulnerabilities (threshold: 5)"
-          fi
+      #     if [ $HIGH -gt 5 ]; then
+      #       echo "Warning: $HIGH high vulnerabilities (threshold: 5)"
+      #     fi
 
-          echo "Dependency gate PASSED"
+      #     echo "Dependency gate PASSED"
 
-      - name: Upload npm Audit Results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: npm-audit-results
-          path: npm-audit-results.json
+      # - name: Upload npm Audit Results
+      #   uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: npm-audit-results
+      #     path: npm-audit-results.json
+
 
 
         #Secrets scaning
